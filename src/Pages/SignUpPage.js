@@ -28,13 +28,17 @@ function Register() {
       const response = await axios.post(`${api}/auth/register`, formData); // Adjust the URL
       console.log("Registration successful:", response.data);
 
-      localStorage.setItem("user", {
-        _id: response.data.user._id,
-        username: response.data.user.username,
-        email: response.data.user.email,
-        role: response.data.user.role,
-      });
+      localStorage.setItem(
+        "user",
+        JSON.stringify({
+          _id: response.data.user._id,
+          username: response.data.user.username,
+          email: response.data.user.email,
+          role: response.data.user.role,
+        })
+      );
       localStorage.setItem("token", response.data.token);
+
       navigate("/home");
     } catch (err) {
       console.error("Registration failed:", err.response?.data);

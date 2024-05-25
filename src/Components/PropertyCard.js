@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { api } from "../constants";
 
 function PropertyCard({ property }) {
   const [showDetails, setShowDetails] = useState(false);
@@ -42,7 +44,6 @@ function PropertyCard({ property }) {
 
   // Function to decode base64 images
   const decodeImage = (base64String) => {
-    console.log(`data:image/png;base64,${base64String}`);
     try {
       // Convert base64 to data URI (URL for displaying in <img>)
       return `data:image/png;base64,${base64String}`;
@@ -53,13 +54,61 @@ function PropertyCard({ property }) {
     }
   };
 
-  const handleClick = (base64String) => {
+  const handleInterested = async () => {
     try {
-      console.log(localStorage.getItem("user"));
-      if (!localStorage.getItem("user")) {
+      const userId = JSON.parse(localStorage.getItem("user"))._id; // Get user ID from localStorage
+
+      if (!userId) {
+        // User not logged in, redirect to login
         navigate("/login");
+        return;
       }
-    } catch (error) {}
+
+      const response = await axios.post(`${api}/inquire`, {
+        propertyId: property._id,
+        userId: userId,
+      });
+
+      console.log("response.data", response.data);
+      console.log("response.status", response.status);
+      if (response.status === 200) {
+        alert("Interest registered successfully!");
+      } else {
+        throw new Error("Failed to register interest");
+      }
+    } catch (error) {
+      console.error("Error registering interest:", error);
+      alert(
+        error.response?.data?.error ||
+          "An error occurred while registering interest."
+      ); // Show error message to the user
+    }
+  };
+
+  const handleLike = async () => {
+    try {
+      const userId = JSON.parse(localStorage.getItem("user"))._id; // Get user ID from localStorage
+
+      if (!userId) {
+        // User not logged in, redirect to login
+        navigate("/login");
+        return;
+      }
+
+      const response = await axios.post(`${api}/like`, {
+        propertyId: property._id,
+        userId: userId,
+      });
+
+      if (response.status === 201) {
+        alert("Your response has been noted");
+      } else {
+        throw new Error("Failed to register your response");
+      }
+    } catch (error) {
+      console.error("Error liking:", error);
+      alert(error.response?.data?.error || "Failed to register your response"); // Show error message to the user
+    }
   };
 
   return (
@@ -90,13 +139,13 @@ function PropertyCard({ property }) {
           <p className="text-blue-500 font-bold">₹{property.rent}/month</p>
           <div className="mt-2 flex space-x-2">
             <button
-              onClick={handleClick}
+              onClick={handleInterested}
               className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-700"
             >
               I'm Interested
             </button>
             <button
-              onClick={handleClick}
+              onClick={handleLike}
               className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-700"
             >
               Like
@@ -131,10 +180,16 @@ function PropertyCard({ property }) {
           <p>Click I'm Interested to get owner details</p>
           <div className="mt-2 flex space-x-2">
             <button
-              onClick={handleClick}
+              onClick={handleInterested}
               className="mt-4 bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded"
             >
               I'm Interested
+            </button>
+            <button
+              onClick={handleLike}
+              className="mt-4 bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded"
+            >
+              Like
             </button>
             <button
               onClick={toggleDetails}

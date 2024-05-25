@@ -1,19 +1,16 @@
 import React, { useEffect } from "react";
-import Hero from "../Components/Hero"; // Import your Hero component
+import NavBar from "../Components/Nav";
 import PropertyList from "../Components/PropertyList"; // Import your PropertyList component
 import { useNavigate } from "react-router-dom";
 
-function LandingPage() {
+function HomePage() {
   const navigate = useNavigate();
-
   useEffect(() => {
-    if (localStorage.getItem("user")) {
-      navigate("/home");
-    }
+    if (!localStorage.getItem("token")) navigate("/");
   });
   return (
     <main className="bg-gray-100 min-h-screen">
-      <Hero /> {/* Render your Hero component */}
+      <NavBar /> {/* Render your Hero component */}
       <div className="container mx-auto py-12">
         {" "}
         {/* Main content container */}
@@ -26,4 +23,4 @@ function LandingPage() {
   );
 }
 
-export default LandingPage;
+export default HomePage;

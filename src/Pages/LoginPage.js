@@ -27,8 +27,9 @@ function Login() {
         response.data
       );
 
-      localStorage.setItem("user", response.data.user);
+      localStorage.setItem("user", JSON.stringify(response.data.user));
       localStorage.setItem("token", response.data.token);
+
       // Handle successful login
       console.log("Login successful:", response.data);
       navigate("/home");
