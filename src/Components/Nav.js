@@ -36,7 +36,7 @@ function NavBar() {
           {/* Conditional Links Based on User Role */}
           {user && user.role === "seller" && (
             <Link
-              to="/seller/properties"
+              to="/owned/properties"
               className="text-white hover:text-gray-200"
             >
               My Properties
@@ -46,14 +46,11 @@ function NavBar() {
           {user ? (
             <>
               {/* Logged In: Show Profile and Logout */}
-              <Link to="/profile" className="text-white hover:text-gray-200">
+              <Link to="" className="text-white hover:text-gray-200">
                 Profile
               </Link>
-              <Link
-                to="/liked-properties"
-                className="text-white hover:text-gray-200"
-              >
-                Liked Properties
+              <Link to="" className="text-white hover:text-gray-200">
+                Liked
               </Link>
               <button
                 onClick={logout}

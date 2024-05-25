@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { api } from "../constants";
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 function Register() {
   const [formData, setFormData] = useState({
@@ -182,6 +183,17 @@ function Register() {
           </div>
           {error && <p className="text-red-500 text-center">{error}</p>}
         </form>
+        <div className="flex space-x-8 justify-center font-bold">
+          <Link to="/" className="text-black hover:text-blue-700">
+            Home
+          </Link>
+          <Link to="/signup" className="text-black hover:text-blue-700">
+            SignUp
+          </Link>
+          <Link to="/" className="text-black hover:text-blue-700">
+            Forgot Password
+          </Link>
+        </div>
       </div>
     </div>
   );

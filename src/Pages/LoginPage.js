@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { api } from "../constants";
+import { Link } from "react-router-dom";
 
 function Login() {
   const [identifier, setIdentifier] = useState("");
@@ -53,7 +54,7 @@ function Login() {
           {/* Removed "to your account" */}
         </div>
         <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
-          <div className="rounded-md shadow-sm -space-y-px">
+          <div className="rounded-md shadow-sm -space-y-px space-y-6">
             <div>
               <label htmlFor="identifier" className="sr-only">
                 Email or Username
@@ -99,6 +100,17 @@ function Login() {
 
           {error && <p className="text-red-500 text-center">{error}</p>}
         </form>
+        <div className="flex space-x-8 justify-center font-bold">
+          <Link to="/" className="text-black hover:text-blue-700">
+            Home
+          </Link>
+          <Link to="/signup" className="text-black hover:text-blue-700">
+            SignUp
+          </Link>
+          <Link to="/" className="text-black hover:text-blue-700">
+            Forgot Password
+          </Link>
+        </div>
       </div>
     </div>
   );

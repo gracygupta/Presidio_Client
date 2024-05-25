@@ -56,8 +56,7 @@ function PropertyCard({ property }) {
 
   const handleInterested = async () => {
     try {
-      const userId = JSON.parse(localStorage.getItem("user"))._id; // Get user ID from localStorage
-
+      const userId = JSON.parse(localStorage.getItem("user"));
       if (!userId) {
         // User not logged in, redirect to login
         navigate("/login");
@@ -66,7 +65,7 @@ function PropertyCard({ property }) {
 
       const response = await axios.post(`${api}/inquire`, {
         propertyId: property._id,
-        userId: userId,
+        userId: userId._id,
       });
 
       console.log("response.data", response.data);

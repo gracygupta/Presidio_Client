@@ -8,6 +8,7 @@ function HomePage() {
   useEffect(() => {
     if (!localStorage.getItem("token")) navigate("/");
   });
+
   return (
     <main className="bg-gray-100 min-h-screen">
       <NavBar /> {/* Render your Hero component */}
