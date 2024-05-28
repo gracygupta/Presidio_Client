@@ -7,6 +7,7 @@ function AddProperty() {
   const [user, setUser] = useState({});
   const navigate = useNavigate();
   const [error, setError] = useState(null);
+  const [message, setMessage] = useState(null);
   const [formData, setFormData] = useState({
     title: "",
     description: "",
@@ -109,9 +110,27 @@ function AddProperty() {
           "Content-Type": "multipart/form-data",
         },
       });
-
-      console.log("Property added successfully:", response.data);
-      navigate("/owned/properties");
+      if (response.data.success === true) {
+        console.log("Property added successfully:", response.data);
+        setMessage("Property added successfully");
+        setFormData({
+          title: "",
+          description: "",
+          place: "",
+          area: "",
+          numberOfBedrooms: "",
+          numberOfBathrooms: "",
+          location: {
+            city: "",
+            state: "",
+            zip: "",
+          },
+          amenities: [],
+          images: [],
+          rent: "",
+        });
+        // navigate("/owned/properties");
+      }
     } catch (error) {
       if (
         error.response &&
@@ -356,6 +375,7 @@ function AddProperty() {
               Add
             </button>
           </div>
+          {message && <p className="text-green-500 text-center">{message}</p>}
           {error && <p className="text-red-500 text-center">{error}</p>}
         </form>
       </div>
