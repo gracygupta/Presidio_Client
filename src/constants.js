@@ -1,2 +1,2 @@
-exports.local_api = "https://api.presidio.brlakgec.com/api";
-exports.api = "http://localhost:5000/api";
+exports.api = "https://api.presidio.brlakgec.com/api";
+exports.local_api = "http://localhost:5000/api";
